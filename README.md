@@ -6,10 +6,10 @@ A proposta é desenvolver um SaaS com o objetivo de facilitar a vida de profissi
 O sistema proposto oferece uma série de funcionalidades para a gestão eficiente de arquivos de áudio e vídeo. Entre as principais features, destaca-se a capacidade de fazer upload de arquivos de áudio e vídeo, transcrevê-los, resumir o conteúdo e traduzi-lo para outros idiomas. Além disso, o usuário pode salvar, deletar e favoritar os arquivos enviados, garantindo uma organização personalizada. O sistema também permite a exportação das transcrições em formato de legenda, facilitando seu uso em vídeos. Por fim, a plataforma oferece a funcionalidade de registro e login, permitindo ao usuário manter um histórico pessoal de suas atividades.
 
 ## Membros da equipe e papeis
-Victor Henrique Silva Ribeiro (Estilização e Front-end)
-Lucca Alvarenga (Front-end)
-Victor Gabriel (Back-end)
-Philipe Dutra (Modelos e banco de dados)
+- Victor Henrique Silva Ribeiro (Estilização e Front-end)
+- Lucca Alvarenga (Front-end)
+- Victor Gabriel (Back-end)
+- Philipe Dutra (Modelos e banco de dados)
 
 ## Tecnologias
 **Ferramentas**
