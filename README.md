@@ -48,38 +48,38 @@ O sistema proposto oferece uma série de funcionalidades para a gestão eficient
 # Backlog do Sprint #0 (Setup)
 ## Setup
 Tarefas e responsáveis:
-    - Setup inicial do front-end [Victor Henrique]
-    - Setup inicial do back-end [Victor Gabriel]
-    - Setup inicial do banco de dados [Philipe]
-    - Setup inicial dos modelos [Philipe]
+- Setup inicial do front-end [Victor Henrique]
+- Setup inicial do back-end [Victor Gabriel]
+- Setup inicial do banco de dados [Philipe]
+- Setup inicial dos modelos [Philipe]
 
 # Backlog do Sprint #1
 ## 1-Como usuário, quero ser capaz de fazer upload de um arquivo de áudio/video
 Tarefas e responsáveis:
-	- Criar interface de upload [Lucca e Victor Henrique]
-    - Implementar no front-end a funcionalidade de upload [Lucca]
-	- Implementar no back-end a recepção e armazenamento do arquivo [Victor Gabriel]
+- Criar interface de upload [Lucca e Victor Henrique]
+- Implementar no front-end a funcionalidade de upload [Lucca]
+- Implementar no back-end a recepção e armazenamento do arquivo [Victor Gabriel]
 
 ## 2-Como usuário, quero ser capaz de transcrever o áudio/video
 Tarefas e responsáveis:
-	- Criar opção de transcrição [Lucca e Victor Henrique]
-    - Implementar no back-end o calculo do tempo estimado de transcrição [Victor Gabriel e Philipe]
-	- Implementar no back-end a transcrição de arquivos [Victor Gabriel e Philipe]
-    - Implementar no back-end o armazenamento da transcrição [Victor Gabriel]
-	- Gerar feedback visual durante a transcrição [Lucca e Victor Henrique]
-    - Criar a visualização da transcrição [Lucca e Victor Henrique]
+- Criar opção de transcrição [Lucca e Victor Henrique]
+- Implementar no back-end o calculo do tempo estimado de transcrição [Victor Gabriel e Philipe]
+- Implementar no back-end a transcrição de arquivos [Victor Gabriel e Philipe]
+- Implementar no back-end o armazenamento da transcrição [Victor Gabriel]
+- Gerar feedback visual durante a transcrição [Lucca e Victor Henrique]
+- Criar a visualização da transcrição [Lucca e Victor Henrique]
 
 ## 3-Como usuário, quero ser capaz de resumir o áudio/video
 Tarefas e responsáveis:
-	- Criar opção de resumo [Lucca e Victor Henrique]
-    - Implementar no back-end o calculo do tempo estimado de resumo [Victor Gabriel e Philipe]
-    - Implementar no back-end o resumo de arquivos [Victor Gabriel e Philipe]
-    - Implementar no back-end o armazenamento do resumo [Victor Gabriel]
-    - Gerar feedback visual durante o resumo [Lucca e Victor Henrique]
-    - Criar a visualização do resumo [Lucca e Victor Henrique]
+- Criar opção de resumo [Lucca e Victor Henrique]
+- Implementar no back-end o calculo do tempo estimado de resumo [Victor Gabriel e Philipe]
+- Implementar no back-end o resumo de arquivos [Victor Gabriel e Philipe]
+- Implementar no back-end o armazenamento do resumo [Victor Gabriel]
+- Gerar feedback visual durante o resumo [Lucca e Victor Henrique]
+- Criar a visualização do resumo [Lucca e Victor Henrique]
 
 ## 4-Como usuário, quero ser capaz de exportar as transcrições em formato de legendas
 Tarefas e responsáveis:
-	- Criar opção de exportação [Lucca e Victor Henrique]
-    - Implementar no back-end a exportação de transcrição [Victor Gabriel]
-    - Implementar no front-end download do arquivo contendo a transcrição [Lucca]
+- Criar opção de exportação [Lucca e Victor Henrique]
+- Implementar no back-end a exportação de transcrição [Victor Gabriel]
+- Implementar no front-end download do arquivo contendo a transcrição [Lucca]
