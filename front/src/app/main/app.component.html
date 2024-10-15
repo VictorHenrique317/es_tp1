@@ -1,0 +1,34 @@
+<body>
+  <aside>
+    <div id="history-wrapper">
+      <h2>History</h2>
+      <!-- <mat-list>
+        <mat-list-item *ngFor="let item of history">
+          <h3 mat-line>{{ item.title }}</h3>
+          <p mat-line>{{ item.date }}</p>
+          <p mat-line>{{ item.duration }}</p>
+          <p mat-line>{{ item.transcription }}</p>
+          <p mat-line>{{ item.summary }}</p>
+        </mat-list-item>
+      </mat-list> -->
+    </div>
+  </aside>
+
+  <section>
+    <div id="upload-wrapper">
+      <button mat-fab extended>
+          <mat-icon>cloud_upload</mat-icon>
+          Upload file
+      </button>
+  
+      <div id="options">
+        <button mat-raised-button>View Transcription</button>
+        <button mat-raised-button>View Summary</button>
+      </div>
+    </div>
+  
+    <router-outlet></router-outlet>
+  </section>
+</body>
+
+
