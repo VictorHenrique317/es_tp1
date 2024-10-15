@@ -59,23 +59,21 @@ Tarefas e responsáveis:
 - Criar interface de upload [Lucca e Victor Henrique]
 - Implementar no front-end a funcionalidade de upload [Lucca]
 - Implementar no back-end a recepção e armazenamento do arquivo [Victor Gabriel]
+- Implementar no back-end a transcrição de arquivos [Victor Gabriel e Philipe]
+- Implementar no back-end o armazenamento da transcrição [Victor Gabriel]
+- Implementar no back-end o resumo de arquivos [Victor Gabriel e Philipe]
+- Implementar no back-end o armazenamento do resumo [Victor Gabriel]
 
 ## 2-Como usuário, quero ser capaz de transcrever o áudio/video
 Tarefas e responsáveis:
 - Criar opção de transcrição [Lucca e Victor Henrique]
-- Implementar no back-end o calculo do tempo estimado de transcrição [Victor Gabriel e Philipe]
-- Implementar no back-end a transcrição de arquivos [Victor Gabriel e Philipe]
-- Implementar no back-end o armazenamento da transcrição [Victor Gabriel]
-- Gerar feedback visual durante a transcrição [Lucca e Victor Henrique]
+- Gerar feedback visual da transcrição [Lucca e Victor Henrique]
 - Criar a visualização da transcrição [Lucca e Victor Henrique]
 
 ## 3-Como usuário, quero ser capaz de resumir o áudio/video
 Tarefas e responsáveis:
 - Criar opção de resumo [Lucca e Victor Henrique]
-- Implementar no back-end o calculo do tempo estimado de resumo [Victor Gabriel e Philipe]
-- Implementar no back-end o resumo de arquivos [Victor Gabriel e Philipe]
-- Implementar no back-end o armazenamento do resumo [Victor Gabriel]
-- Gerar feedback visual durante o resumo [Lucca e Victor Henrique]
+- Gerar feedback visual do resumo [Lucca e Victor Henrique]
 - Criar a visualização do resumo [Lucca e Victor Henrique]
 
 ## 4-Como usuário, quero ser capaz de exportar as transcrições em formato de legendas
