@@ -1,33 +1,52 @@
 <body>
-  <aside>
-    <div id="history-wrapper">
-      <h2>History</h2>
-      <!-- <mat-list>
-        <mat-list-item *ngFor="let item of history">
-          <h3 mat-line>{{ item.title }}</h3>
-          <p mat-line>{{ item.date }}</p>
-          <p mat-line>{{ item.duration }}</p>
-          <p mat-line>{{ item.transcription }}</p>
-          <p mat-line>{{ item.summary }}</p>
-        </mat-list-item>
-      </mat-list> -->
-    </div>
-  </aside>
+  <header>
+    <img [src]="'assets/logo.jpeg'">
+    <h1> MeetingLM</h1>
+  </header>
 
   <section>
+    <aside>
+      <div id="history-wrapper">
+        <h2>Histórico</h2>
+        <ul>
+          <li> Reunião 1 </li>
+          <li> Reunião 2 </li>
+          <li> Reunião 3 </li>
+          <li> Reunião 4 </li>
+          <li> Reunião 5 </li>
+          <li> Reunião 6 </li>
+          <li> Reunião 7 </li>
+          <li> Reunião 8 </li>
+          <li> Reunião 9 </li>
+          <li> Reunião 10 </li>
+        </ul>
+      </div>
+    </aside>
+
     <div id="upload-wrapper">
-      <button mat-fab extended>
-          <mat-icon>cloud_upload</mat-icon>
-          Upload file
-      </button>
+      <div id="upload">
+        <p>Clique para o Upload</p>
+      </div>
   
-      <div id="options">
-        <button mat-raised-button>View Transcription</button>
-        <button mat-raised-button>View Summary</button>
+      <div id="tasks-wrapper">
+        <span>Tarefas</span>
+        <div>
+          <button mat-raised-button>Transcrever</button>
+          <button mat-raised-button>Resumir</button>
+        </div>
+      </div>
+
+      <div id="file-options-wrapper">
+        <button mat-raised-button>Limpar</button>
+        <button mat-raised-button id="enviar">Enviar</button>
       </div>
     </div>
-  
-    <router-outlet></router-outlet>
+    
+    <aside id="output_wrapper">
+      <span>Saída</span>
+      <router-outlet></router-outlet>
+    </aside>
+    
   </section>
 </body>
 
