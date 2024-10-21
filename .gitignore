@@ -1,3 +1,4 @@
 front/.vscode
 front/node_modules
 front/.angular
+back/back_venv
