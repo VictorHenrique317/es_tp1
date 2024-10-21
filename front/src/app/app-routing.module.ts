@@ -1,12 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TranscriptionComponent } from './main/transcription/transcription.component';
-import { SummaryComponent } from './main/summary/summary/summary.component';
 
-const routes: Routes = [
-  {path: 'transcription', component: TranscriptionComponent},
-  {path: 'summary', component: SummaryComponent},
-];
+const routes: Routes = [];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
