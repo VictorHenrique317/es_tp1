@@ -24,7 +24,8 @@
     </aside>
 
     <div id="upload-wrapper">
-      <div id="upload">
+      <div id="upload" (click)="upload()">
+        <input type="file" #fileInput (change)="onFileSelected($event)" accept=".mp4,.wav,.mp3, .m4a" hidden />
         <p>Clique para o Upload</p>
       </div>
   
@@ -43,7 +44,7 @@
     </div>
     
     <aside id="output_wrapper">
-      <span>Saída</span>
+      <span>Saída {{this.current_task}}</span>
       <router-outlet></router-outlet>
     </aside>
     
