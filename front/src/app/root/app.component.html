@@ -24,28 +24,34 @@
     </aside>
 
     <div id="upload-wrapper">
-      <div id="upload" (click)="upload()">
+      <div id="upload" (click)="selectFile()">
         <input type="file" #fileInput (change)="onFileSelected($event)" accept=".mp4,.wav,.mp3, .m4a" hidden />
-        <p>Clique para o Upload</p>
+        <div id="file-wrapper" *ngIf="this.file">
+          <mat-icon> insert_drive_file</mat-icon>
+          <span id="filename">{{this.file.name}}</span>
+        </div>
+        <p *ngIf="!this.file">Clique para o Upload</p>
       </div>
-  
+
       <div id="tasks-wrapper">
         <span>Tarefas</span>
         <div>
-          <button mat-raised-button>Transcrever</button>
-          <button mat-raised-button>Resumir</button>
+          <button mat-raised-button [disabled]="this.task_in_progress" (click)="fetchTranscription()">Transcrever</button>
+          <button mat-raised-button [disabled]="this.task_in_progress" (click)="fetchSummary()">Resumir</button>
         </div>
       </div>
 
       <div id="file-options-wrapper">
-        <button mat-raised-button>Limpar</button>
-        <button mat-raised-button id="enviar">Enviar</button>
+        <!-- <button mat-raised-button>Limpar</button> -->
+        <button mat-raised-button id="enviar" [disabled]="this.task_in_progress" (click)="upload()">Enviar</button>
       </div>
     </div>
     
     <aside id="output_wrapper">
-      <span>Saída {{this.current_task}}</span>
-      <router-outlet></router-outlet>
+      <span>{{this.task_output_text}}</span>
+      <div>
+        <p>{{this.output}}</p>
+      </div>
     </aside>
     
   </section>
