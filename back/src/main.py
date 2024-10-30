@@ -31,6 +31,7 @@ def process_video(file : UploadFile = File(...), db: Session = Depends(get_db)):
         db.query(MeetingAnalysis)
         .order_by(MeetingAnalysis.id.desc())
         .first()
+        .id
     )
     new_id = last_instance_id+1 if last_instance_id else 0
     save_dir = os.path.join(UPLOAD_DIRECTORY,str(new_id))
@@ -58,14 +59,20 @@ def process_video(file : UploadFile = File(...), db: Session = Depends(get_db)):
     ###    
         
     # TODO: tratar excessoes
-    return JSONResponse(status_code=201, content={"message": "Video processed sucessfully"})
+    return JSONResponse(status_code=201,
+                        content={
+                            "message": "audio processed sucessfully",
+                            "db_id":new_id
+                            }
+                        )
 
 @app.post("/audio")
-def process_video(file : UploadFile = File(...), db: Session = Depends(get_db)):
+def process_audio(file : UploadFile = File(...), db: Session = Depends(get_db)):
     last_instance_id  = (
         db.query(MeetingAnalysis)
         .order_by(MeetingAnalysis.id.desc())
         .first()
+        .id
     )
     new_id = last_instance_id+1 if last_instance_id else 0
     save_dir = os.path.join(UPLOAD_DIRECTORY,str(new_id))
@@ -93,4 +100,43 @@ def process_video(file : UploadFile = File(...), db: Session = Depends(get_db)):
     ###    
         
     # TODO: tratar excessoes
-    return JSONResponse(status_code=201, content={"message": "Video processed sucessfully"})
+    return JSONResponse(status_code=201,
+                        content={
+                            "message": "audio processed sucessfully",
+                            "db_id":new_id
+                            }
+                        )
+    
+@app.get("/summary")
+def get_summary(query_id: int, db: Session = Depends(get_db)):
+    summary_path  = (
+        db.query(MeetingAnalysis)
+        .filter_by(id=query_id)
+        .first()
+        .summary_path
+    )
+    with open(summary_path, 'r') as file:
+        summary = file.read()
+    
+    return JSONResponse(status_code=200,
+                        content={
+                            "summary": summary
+                            }
+                        )
+
+@app.get("/transcription")
+def get_transcription(query_id: int, db: Session = Depends(get_db)):
+    transcription_path  = (
+        db.query(MeetingAnalysis)
+        .filter_by(id=query_id)
+        .first()
+        .transcription_path
+    )
+    with open(transcription_path, 'r') as file:
+        transcription = file.read()
+    
+    return JSONResponse(status_code=200,
+                        content={
+                            "transcription": transcription
+                            }
+                        )        
