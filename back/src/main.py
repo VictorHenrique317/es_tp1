@@ -1,12 +1,11 @@
-from fastapi import FastAPI, File, UploadFile, Depends
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, File, UploadFile, Depends, HTTPException
+from fastapi.responses import JSONResponse, FileResponse
 from contextlib import asynccontextmanager
-from database import get_db
+from src.database import get_db, MeetingAnalysis
 from sqlalchemy.orm import Session
-from sqlalchemy import func
 import os
 import shutil
-from models import MeetingAnalysis
+from pathlib import Path
 
 UPLOAD_DIRECTORY = "./uploads/"
 
@@ -26,7 +25,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 @app.post("/video")
-def process_video(file : UploadFile = File(...), db: Session = Depends(get_db)):
+async def new_video(file : UploadFile = File(...), db: Session = Depends(get_db)):
     last_instance_id  = (
         db.query(MeetingAnalysis)
         .order_by(MeetingAnalysis.id.desc())
@@ -36,27 +35,16 @@ def process_video(file : UploadFile = File(...), db: Session = Depends(get_db)):
     new_id = last_instance_id+1 if last_instance_id else 0
     save_dir = os.path.join(UPLOAD_DIRECTORY,str(new_id))
     video_path = os.path.join(save_dir,file.filename)
-    transcription_path = os.path.join(save_dir,"transcription.txt")
-    summary_path = os.path.join(save_dir,"summary.txt")
-    
-    ### COMPUTAR TRANSCRICAO E RESUMO AQUI
-    
-    ###
     
     db.add(
         MeetingAnalysis(
             media_path= video_path,
-            transcription_path = transcription_path,
-            summary_path = summary_path
         )
     )
+    db.commit()
     
     with open(video_path, "wb") as buffer: # salva o video no disco
         shutil.copyfileobj(file.file,buffer)
-
-    ## SALVAR TRANSCRICAO E RESUMO EM DISCO AQUI
-    
-    ###    
         
     # TODO: tratar excessoes
     return JSONResponse(status_code=201,
@@ -67,7 +55,7 @@ def process_video(file : UploadFile = File(...), db: Session = Depends(get_db)):
                         )
 
 @app.post("/audio")
-def process_audio(file : UploadFile = File(...), db: Session = Depends(get_db)):
+async def new_audio(file : UploadFile = File(...), db: Session = Depends(get_db)):
     last_instance_id  = (
         db.query(MeetingAnalysis)
         .order_by(MeetingAnalysis.id.desc())
@@ -77,27 +65,16 @@ def process_audio(file : UploadFile = File(...), db: Session = Depends(get_db)):
     new_id = last_instance_id+1 if last_instance_id else 0
     save_dir = os.path.join(UPLOAD_DIRECTORY,str(new_id))
     audio_path = os.path.join(save_dir,file.filename)
-    transcription_path = os.path.join(save_dir,"transcription.txt")
-    summary_path = os.path.join(save_dir,"summary.txt")
-    
-    ### COMPUTAR TRANSCRICAO E RESUMO AQUI
-    
-    ###
     
     db.add(
         MeetingAnalysis(
             media_path= audio_path,
-            transcription_path = transcription_path,
-            summary_path = summary_path
         )
     )
+    db.commit()
     
     with open(audio_path, "wb") as buffer: # salva o video no disco
         shutil.copyfileobj(file.file,buffer)
-
-    ## SALVAR TRANSCRICAO E RESUMO EM DISCO AQUI
-    
-    ###    
         
     # TODO: tratar excessoes
     return JSONResponse(status_code=201,
@@ -108,35 +85,70 @@ def process_audio(file : UploadFile = File(...), db: Session = Depends(get_db)):
                         )
     
 @app.get("/summary")
-def get_summary(query_id: int, db: Session = Depends(get_db)):
-    summary_path  = (
+async def compute_summary(query_id: int, db: Session = Depends(get_db)):
+    meeting_instance  = (
         db.query(MeetingAnalysis)
         .filter_by(id=query_id)
         .first()
-        .summary_path
     )
-    with open(summary_path, 'r') as file:
-        summary = file.read()
     
+    if(not meeting_instance.summary_path):
+        save_dir = os.path.join(UPLOAD_DIRECTORY,str(meeting_instance.id))
+        os.mkdir(save_dir)
+        summary_path = os.path.join(save_dir,"summary.txt")
+        ## BACKEND CALL HERE
+        ##Compute summary and save it at summary_path
+        meeting_instance.summary_path = summary_path
+        db.commit()
+        
     return JSONResponse(status_code=200,
                         content={
-                            "summary": summary
+                            "link": f"/download/summary/{meeting_instance.id}"
                             }
                         )
 
+@app.get("/download/summary/{instance_id}")
+async def download_summary(instance_id: int):
+    file_path = os.path.join(UPLOAD_DIRECTORY,str(instance_id),"summary.txt")
+    if file_path.exists():
+        return FileResponse(path=file_path, filename=f"summary{instance_id}.txt")
+    
+    raise HTTPException(
+        status_code=404,
+        detail="The summary of media with id {instance_id} was not computed yet"        
+    )
+
+
 @app.get("/transcription")
-def get_transcription(query_id: int, db: Session = Depends(get_db)):
-    transcription_path  = (
+async def compute_transcription(query_id: int, db: Session = Depends(get_db)):
+    meeting_instance  = (
         db.query(MeetingAnalysis)
         .filter_by(id=query_id)
         .first()
-        .transcription_path
     )
-    with open(transcription_path, 'r') as file:
-        transcription = file.read()
     
+    if(not meeting_instance.trascription_path):
+        save_dir = os.path.join(UPLOAD_DIRECTORY,str(meeting_instance.id))
+        os.mkdir(save_dir)
+        transcription_path = os.path.join(save_dir,"transcription.txt")
+        ## BACKEND CALL HERE
+        ##Compute summary and save it at summary_path
+        meeting_instance.trascription_path = transcription_path
+        db.commit()
+        
     return JSONResponse(status_code=200,
                         content={
-                            "transcription": transcription
+                            "link": f"/download/transcription/{meeting_instance.id}"
                             }
-                        )        
+                        )
+    
+@app.get("/download/transcription/{instance_id}")
+async def download_transcription(instance_id: int):
+    file_path = Path(os.path.join(UPLOAD_DIRECTORY,str(instance_id),"transcription.txt"))
+    if file_path.exists():
+        return FileResponse(path=file_path, filename=f"transcription{instance_id}.txt")
+    
+    raise HTTPException(
+        status_code=404,
+        detail=f"The transcription of media with id {instance_id} was not computed yet"        
+    )

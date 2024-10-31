@@ -12,9 +12,8 @@ if not MYSQL_DATABASE_URL:
 engine = create_engine(MYSQL_DATABASE_URL)
 
 Base = declarative_base()
-from project.models import *
+from src.models import *
 Base.metadata.create_all(bind=engine)
-
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 def get_db():
