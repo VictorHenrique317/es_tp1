@@ -1,5 +1,4 @@
-from sqlalchemy import String, DateTime, Integer, func
-from sqlalchemy.orm import Column
+from sqlalchemy import String, DateTime, Integer, func, Column
 from src.database import Base
 
 class MeetingAnalysis(Base):
@@ -11,5 +10,3 @@ class MeetingAnalysis(Base):
     media_path = Column(String(1024))
     trascription_path = Column(String(1024)) # Definir tamanho maximo
     summary_path = Column(String(1024))
-    
-    
