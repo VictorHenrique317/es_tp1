@@ -1,0 +1,7 @@
+langchain==0.0.259
+uvicorn
+fastapi
+pymysql
+sqlalchemy
+python-dotenv
+python-multipart
