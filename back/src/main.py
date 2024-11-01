@@ -7,7 +7,7 @@ import os
 import shutil
 from pathlib import Path
 
-UPLOAD_DIRECTORY = "./uploads/"
+UPLOAD_DIRECTORY = "/app/uploads/"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -23,6 +23,10 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+@app.get("/status")
+async def status():
+    return JSONResponse(status_code=200, content={"message": "OK!"})
 
 @app.post("/video")
 async def new_video(file : UploadFile = File(...), db: Session = Depends(get_db)):
