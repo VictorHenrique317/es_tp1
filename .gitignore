@@ -3,3 +3,4 @@ front/node_modules
 front/.angular
 back/back_venv
 __pycache__/
+*.env
