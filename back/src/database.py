@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
+from src.models import *
 import os
 
 load_dotenv()
@@ -12,7 +13,6 @@ if not MYSQL_DATABASE_URL:
 engine = create_engine(MYSQL_DATABASE_URL)
 
 Base = declarative_base()
-from src.models import *
 Base.metadata.create_all(bind=engine)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
