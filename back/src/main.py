@@ -96,8 +96,13 @@ async def compute_summary(query_id: int, db: Session = Depends(get_db)):
         save_dir = os.path.join(UPLOAD_DIRECTORY,str(meeting_instance.id))
         os.mkdir(save_dir)
         summary_path = os.path.join(save_dir,"summary.txt")
-        ## BACKEND CALL HERE
-        ##Compute summary and save it at summary_path
+        transcription_path = os.path.join(save_dir,"summary.txt")
+        if(not meeting_instance.trascription_path): # summary needs transcription first
+            # CALL MODEL FOR TRANSCRIPTION HERE 
+            # save it at transcription_path
+            meeting_instance.trascription_path = transcription_path
+        ## CALL MODEL FOR SUMMARY HERE
+        ## save it at summary_path
         meeting_instance.summary_path = summary_path
         db.commit()
         
