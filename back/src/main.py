@@ -96,7 +96,7 @@ async def compute_summary(query_id: int, db: Session = Depends(get_db)):
         save_dir = os.path.join(UPLOAD_DIRECTORY,str(meeting_instance.id))
         os.mkdir(save_dir)
         summary_path = os.path.join(save_dir,"summary.txt")
-        transcription_path = os.path.join(save_dir,"summary.txt")
+        transcription_path = os.path.join(save_dir,"transcription.txt")
         if(not meeting_instance.trascription_path): # summary needs transcription first
             # CALL MODEL FOR TRANSCRIPTION HERE 
             # save it at transcription_path
