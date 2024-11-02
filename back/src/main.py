@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 import os
 import shutil
 from pathlib import Path
+from src.llms import model_whisper, model_ollama
 
 UPLOAD_DIRECTORY = "/app/uploads/"
 
@@ -88,6 +89,29 @@ async def new_audio(file : UploadFile = File(...), db: Session = Depends(get_db)
                             }
                         )
     
+
+@app.get("/simple_transcription")
+def compute_simple_transcription(AUDIO_PATH: str, TRANSCRIPTION_PATH: str):
+
+    with open(TRANSCRIPTION_PATH, 'w') as f:
+        segments, info = model_whisper.transcribe(AUDIO_PATH, beam_size=5)
+        for segment in segments:
+            f.write(("%s\n" % (segment.text)))
+
+
+@app.get("/simple_summary")
+def compute_simple_summary(TRANSCRIPTION_PATH: str, SUMMARY_PATH: str):
+
+    TRANSCRIPTION = "" 
+    with open(TRANSCRIPTION_PATH, 'r') as f: 
+        TRANSCRIPTION = f.read()
+
+    SUMMARY = model_ollama.predict("explique o texto a seguir: {TRANSCRIPTION}")
+
+    with open(SUMMARY_PATH, 'w') as f:
+        f.write(SUMMARY)
+
+
 @app.get("/summary")
 async def compute_summary(query_id: int, db: Session = Depends(get_db)):
     meeting_instance  = (
@@ -100,8 +124,8 @@ async def compute_summary(query_id: int, db: Session = Depends(get_db)):
         save_dir = os.path.join(UPLOAD_DIRECTORY,str(meeting_instance.id))
         os.mkdir(save_dir)
         summary_path = os.path.join(save_dir,"summary.txt")
-        ## BACKEND CALL HERE
-        ##Compute summary and save it at summary_path
+        # need transcription path
+        compute_simple_summary(, summary_path)
         meeting_instance.summary_path = summary_path
         db.commit()
         
@@ -135,8 +159,8 @@ async def compute_transcription(query_id: int, db: Session = Depends(get_db)):
         save_dir = os.path.join(UPLOAD_DIRECTORY,str(meeting_instance.id))
         os.mkdir(save_dir)
         transcription_path = os.path.join(save_dir,"transcription.txt")
-        ## BACKEND CALL HERE
-        ##Compute summary and save it at summary_path
+        ## need audio_path
+        compute_simple_transcription(, transcription_path)
         meeting_instance.trascription_path = transcription_path
         db.commit()
         

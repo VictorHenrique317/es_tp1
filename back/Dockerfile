@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install sqlite3 -y --no-install-recommends \
 # Install Ollama
 RUN curl -fsSL https://ollama.com/install.sh | sh 
 
-# Install model in the image
+# Install ollama model in the image
 RUN ollama serve & \
     sleep 1 && \
     ollama pull llama3.2:1b
@@ -23,8 +23,10 @@ RUN ollama serve & \
 # Copy the application code
 COPY . .
 RUN pip install -r requirements.txt
-#RUN python3 models.py # load the model in the image
+
+# Install whisper model in the image
+RUN python3 src/llms.py 
 
 ENTRYPOINT ["sh", "-c"]
 
-#CMD ["ollama serve & python3 run.py"]
+CMD ["ollama serve & PYTHONPATH=src uvicorn main:app --host 0.0.0.0 --port 80"]
