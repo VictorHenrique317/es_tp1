@@ -124,8 +124,11 @@ async def compute_summary(query_id: int, db: Session = Depends(get_db)):
         save_dir = os.path.join(UPLOAD_DIRECTORY,str(meeting_instance.id))
         os.mkdir(save_dir)
         summary_path = os.path.join(save_dir,"summary.txt")
-        # need transcription path
-        compute_simple_summary(, summary_path)
+        transcription_path = os.path.join(save_dir, "transcription.txt")
+        if (not meeting_instance.transcription_path):
+            compute_simple_transcription(meeting_instance.media_path, transcription_path)
+
+        compute_simple_summary(transcription_path, summary_path)
         meeting_instance.summary_path = summary_path
         db.commit()
         
@@ -159,8 +162,7 @@ async def compute_transcription(query_id: int, db: Session = Depends(get_db)):
         save_dir = os.path.join(UPLOAD_DIRECTORY,str(meeting_instance.id))
         os.mkdir(save_dir)
         transcription_path = os.path.join(save_dir,"transcription.txt")
-        ## need audio_path
-        compute_simple_transcription(, transcription_path)
+        compute_simple_transcription(meeting_instance.media_path, transcription_path)
         meeting_instance.trascription_path = transcription_path
         db.commit()
         
