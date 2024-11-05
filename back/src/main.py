@@ -1,5 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, Depends, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
+from fastapi.middlware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from src.database import get_db, MeetingAnalysis
 from sqlalchemy.orm import Session
@@ -24,6 +25,13 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/status")
 async def status():
