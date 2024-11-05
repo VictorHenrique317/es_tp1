@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-const  API_URL : string = 'http://localhost:8000/';
+const  API_URL : string = 'http://localhost:80';
 const RETRY_DELAY: number = 1000; // 1s
 const MAX_RETRIES: number = 300; // 5m
 
