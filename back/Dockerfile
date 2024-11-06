@@ -7,7 +7,6 @@ WORKDIR /app
 # Install necessary dependencies, curl, supervisor, and Poetry
 RUN apt-get update && apt-get install sqlite3 -y --no-install-recommends \
     curl \
-    supervisor \
     && pip install poetry \
     && apt-get autoremove -y \
     && apt-get clean \
@@ -21,13 +20,14 @@ COPY . /app
 
 # Install Python dependencies using Poetry
 RUN poetry config virtualenvs.create false
-RUN poetry install
- 
-# Copy supervisor configuration file
-COPY ./supervisord.conf /etc/supervisord.conf
+RUN poetry install --no-root
 
 # Expose the necessary port
 EXPOSE 80
 
-# Set the entry point to use supervisor to manage both processes
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+# Starts the FastAPI server
+CMD ollama serve &\
+    sleep 10 &&\
+    ollama pull llama3.2:1b &&\
+    ollama  create summarizer -f ./Modelfile &&\
+    uvicorn src.main:app --host 0.0.0.0 --port 80
