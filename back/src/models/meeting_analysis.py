@@ -8,5 +8,5 @@ class MeetingAnalysis(Base):
     creation_time = Column(DateTime, default=func.now())
     
     media_path = Column(String(1024))
-    trascription_path = Column(String(1024)) # Definir tamanho maximo
+    transcription_path = Column(String(1024)) # Definir tamanho maximo
     summary_path = Column(String(1024))
