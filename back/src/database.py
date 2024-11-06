@@ -9,12 +9,6 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise ValueError("Database URL is missing. Please set the DATABASE_URL environment variable.")
 
-# Get the absolute path for the database file
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# DATABASE_PATH = os.path.join(BASE_DIR, 'test.db')  # Adjust to your folder structure
-
-# SQLite database URL
-#SQLALCHEMY_DATABASE_URL = f"sqlite:///{DATABASE_URL}"
 
 print(os.path.abspath(__file__))
 

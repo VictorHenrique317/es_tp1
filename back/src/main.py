@@ -1,19 +1,15 @@
 from fastapi import FastAPI, File, UploadFile, Depends, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
-from fastapi.middlware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from src.database import get_db, MeetingAnalysis
 from sqlalchemy.orm import Session
 import os
 import json
-#import subprocess
-#import requests
-#import httpx
 import asyncio
 import shutil
 from pathlib import Path
 from faster_whisper import WhisperModel
-#from src.llms import model_whisper, model_ollama
 
 
 UPLOAD_DIRECTORY = "/home/victor/Projects/es_tp1/back/uploads/"
