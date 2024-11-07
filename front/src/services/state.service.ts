@@ -21,6 +21,8 @@ export class StateService {
   public task_in_progress$ = this._task_in_progress.asObservable();
   public output$ = this._output.asObservable();
 
+  private db_id: string | undefined;
+
   constructor(private api_service: ApiService) { }
 
   public setFile(file: File): void {
@@ -29,7 +31,8 @@ export class StateService {
 
   private async postVideo(): Promise<void> {
     if (this._file.value){
-      await this.api_service.postVideo(this._file.value);
+      let data = await this.api_service.postVideo(this._file.value);
+      this.db_id = data.db_id;
     }
     
     return;
@@ -37,7 +40,8 @@ export class StateService {
 
   private async postAudio(): Promise<void> {
     if (this._file.value){
-      await this.api_service.postAudio(this._file.value);
+      let data = await this.api_service.postAudio(this._file.value);
+      this.db_id = data.db_id;
     }
 
     return;
@@ -46,21 +50,25 @@ export class StateService {
   public async postFile(): Promise<void> {
     if (!this._file.value){ return ;}
 
+    this._task_in_progress.next(true);
     if (this._file.value.type.startsWith('audio/')) {
-      this.postAudio();
+      await this.postAudio();
     }else if (this._file.value.type.startsWith('video/')) {
-      this.postVideo();
+      await this.postVideo();
     }
+    this._task_in_progress.next(false);
 
     return;
   }
 
   public async fetchTranscription(): Promise<void> {
     if (this._task_in_progress.value) {return;}
+    if (!this.db_id) {return;}
 
     this._task_in_progress.next(true);
     this._current_task.next(TaskType.TRANSCRIPTION);
-    this.api_service.getTranscription().then((transcription) => {
+    this._output.next(undefined);
+    this.api_service.getTranscription(this.db_id).then((transcription) => {
       this._output.next(transcription);
       this._task_in_progress.next(false);
 
@@ -74,10 +82,12 @@ export class StateService {
 
   public async fetchSummary(): Promise<void> {
     if (this._task_in_progress.value) {return;}
+    if (!this.db_id) {return;}
 
     this._task_in_progress.next(true);
     this._current_task.next(TaskType.SUMMARY);
-    this.api_service.getSummary().then((summary) => {
+    this._output.next(undefined);
+    this.api_service.getSummary(this.db_id).then((summary) => {
       this._output.next(summary);
       this._task_in_progress.next(false);
 
