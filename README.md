@@ -81,3 +81,7 @@ Tarefas e responsáveis:
 - Criar opção de exportação [Lucca e Victor Henrique]
 - Implementar no back-end a exportação de transcrição [Victor Gabriel]
 - Implementar no front-end download do arquivo contendo a transcrição [Lucca]
+
+# Diagramas UML
+## Diagrama de atividades
+![Flowchart](uml_flowchart.png)
