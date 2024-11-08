@@ -21,7 +21,7 @@ async def lifespan(app: FastAPI):
     # Startup event: Create upload directory
     os.makedirs(UPLOAD_DIRECTORY, exist_ok=True)
     global transcription_model
-    transcription_model = WhisperModel("large-v3", device="cpu", compute_type="int8")
+    transcription_model = WhisperModel("small", device="cpu", compute_type="int8")
     # Yield control to the application
     yield
     

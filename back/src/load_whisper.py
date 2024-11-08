@@ -1,3 +1,3 @@
 from faster_whisper import WhisperModel
 
-WhisperModel("large-v3", device="cpu", compute_type="int8")
+WhisperModel("small", device="cpu", compute_type="int8")
