@@ -1,0 +1,1 @@
+docker build -t es_tp1_back .
